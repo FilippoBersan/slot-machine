@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="style.css" />
+<html>
+  <body>
+    <h1>Slot Machine a Ciliegie</h1>
+    <div class="card">
+      <div class="button" onclick="gioca()">Gira</div>
+      <p id="risultato"></p>
+    </div>
+
+    <script>
+      // Codice della slot machine
+      class SlotMachine {
+        constructor() {
+          this.symbols = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎'];
+          this.reels = [0, 0, 0];
+        }
+
+        spin() {
+          this.reels = this.reels.map(() =>
+            Math.floor(Math.random() * this.symbols.length)
+          );
+          return this.getResult();
+        }
+
+        getResult() {
+          return this.reels.map((index) => this.symbols[index]);
+        }
+
+        checkWin() {
+          const result = this.getResult();
+          if (result[0] === result[1] && result[1] === result[2]) {
+            return result[0] === '🍒' ? 'Jackpot di ciliegie!' : 'Vincita!';
+          }
+          return 'Nessuna vincita';
+        }
+      }
+
+      // Inizializza la slot machine
+      const slot = new SlotMachine();
+
+      // Funzione per giocare
+      function gioca() {
+        const risultato = slot.spin();
+        const vincita = slot.checkWin();
+        document.getElementById('risultato').innerHTML =
+          risultato.join(' ') + '<br>' + vincita;
+      }
+    </script>
+  </body>
+</html>
